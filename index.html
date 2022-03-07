@@ -1,0 +1,75 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta name="referrer" content="no-referrer" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap"
+      rel="stylesheet"
+    />
+    <title>
+      Javascript Authentication Example - Using Asgardeo Auth Javascript UMD SDK
+    </title>
+    <style>
+      * {
+        font-family: Karla, sans-serif;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="root">
+      <div
+        class="w-screen bg-gray-900 h-screen flex flex-col justify-center text-center"
+      >
+        <div class="text-6xl text-white font-bold">
+          <h1>thrift</h1>
+        </div>
+        <div class="py-6">
+          <div id="loading" class="text-white">Loading...</div>
+          <div id="error"></div>
+          <div id="logged-in-view" class="hidden">
+            <h2 class="text-4xl font-light text-white">
+              You're authenticated 🥳🎉
+            </h2>
+            <button
+              class="bg-red-500 w-28 py-4 rounded-xl mt-8 font-bold text-lg text-white"
+              onClick="handleLogout()"
+            >
+              Logout
+            </button>
+          </div>
+          <div id="logged-out-view" class="hidden">
+            <h2 class="text-4xl font-light text-white">
+              You're not logged in 😔😢
+            </h2>
+            <button
+              class="bg-orange-500 w-28 py-4 rounded-xl mt-8 font-bold text-lg text-white"
+              onClick="handleLogin()"
+            >
+              Login
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/@asgardeo/auth-spa@latest/dist/asgardeo-spa.production.min.js"></script>
+    <script src="https://unpkg.com/json-formatter-js@latest/dist/json-formatter.umd.js"></script>
+    <script>
+      const authConfig = {
+        clientID: "",
+        signInRedirectURL: "",
+        serverOrigin: "",
+        scope: [],
+      };
+    </script>
+    <script type="application/javascript" src="app.js"></script>
+  </body>
+</html>
