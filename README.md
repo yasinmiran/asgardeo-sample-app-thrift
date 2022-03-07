@@ -1,4 +1,6 @@
-# HTML Javascript Sample Application using Asgardeo Auth SPA SDK
+# Thrift Sample App
+
+> HTML Javascript Sample Application using Asgardeo's Auth SPA SDK
 
 ## Getting Started
 
