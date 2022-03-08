@@ -52,6 +52,3 @@ npm start
 
 The app should open at `https://localhost:5000`. If the browser doesn't open the app and throws an invalid-certificate error, just type `thisisunsafe` to continue.
 
-## License
-
-Licenses this source under the Apache License, Version 2.0 ([LICENSE](../../LICENSE)), You may not use this file except in compliance with the License.
