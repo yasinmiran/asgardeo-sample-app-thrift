@@ -1,54 +1,39 @@
 # Thrift Sample App
 
-> HTML Javascript Sample Application using Asgardeo's Auth SPA SDK
+A plain JavaScript single-page app that signs users in with WSO2 Identity Platform (formerly Asgardeo), built on [`@asgardeo/browser`](https://www.npmjs.com/package/@asgardeo/browser). It goes with the post [Asgardeo JIT user provisioning](https://yasint.dev/asgardeo-jit-user-provisioning/).
 
-## Getting Started
+Version 1 used `@asgardeo/auth-spa` from a CDN. That SDK is [deprecated and no longer maintained](https://github.com/asgardeo/asgardeo-auth-spa-sdk), and its replacement ships as an npm module only, so the sample now runs on Vite. If you need the old one, it's tagged [`v1.0.0`](https://github.com/yasinmiran/asgardeo-sample-app-thrift/tree/v1.0.0).
 
-### Register an Application
+## Register an application
 
-Follow the instructions in the [Try Out the Sample Apps](../../README.md#try-out-the-sample-apps) section to register an application.
+In the console, create a single-page application and add `https://localhost:5173` both as an authorized redirect URL and as an allowed origin. Copy its client ID.
 
-Make sure to add `https://localhost:5000` as a Redirect URL and also add it under allowed origins.
+## Configure
 
-### Configuring the Sample
-
-1. Update the `authConfig` object in `index.html` with your registered app details.
-
-Note: You will only have to paste in the `client ID` generated for the application you registered.
-
-Read more about the SDK configurations [here](../../README.md#initialize) .
-
-```js
-const authConfig = {
-    // ClientID generated for the application
-    clientID: "<ADD_CLIENT_ID_HERE>",
-    // After login callback URL - We have to use the app root as this is a SPA
-    // (Add it in application OIDC settings "Callback Url")
-    signInRedirectURL: origin,
-    // Asgardeo URL
-    serverOrigin: "<ADD_SERVER_ORIGIN_HERE>",
-};
+```bash
+cp .env.example .env
 ```
 
-### Run the Application
+Then fill in `.env`:
 
-Note: If you are deploying and testing out this sample in your own server environment, just adding the static files would be enough.
-The following steps demonstrates the usage of a 3rd party module to serve up the static content.
+```bash
+VITE_ASGARDEO_CLIENT_ID=<your client ID>
+VITE_ASGARDEO_BASE_URL=https://api.asgardeo.io/t/<your org name>
+```
 
-### Install Dependencies
-
-The sample is using [http-server](https://www.npmjs.com/package/http-server) package to serve the static files.
-You have to install it through npm.
+## Run
 
 ```bash
 npm install
+npm run dev
 ```
 
-### Starting the server
+The app opens at `https://localhost:5173`. The dev server uses a throwaway self-signed certificate, so the browser warns the first time; accept it and carry on. It's port 5173 rather than 5000 because macOS keeps 5000 for the AirPlay receiver.
 
-```bash
-npm start
-```
+`npm run build` writes a static build to `dist/` that any static host can serve. Register that host's URL in the console too.
 
-The app should open at `https://localhost:5000`. If the browser doesn't open the app and throws an invalid-certificate error, just type `thisisunsafe` to continue.
+## How the sign-in works
 
+All of it lives in [`src/main.js`](src/main.js). The SDK is initialized with the client ID, base URL and the page's own origin as the redirect target. Clicking Login calls `signIn()`, which sends the browser to the authorize endpoint with PKCE. When it comes back with `?code=...` in the URL, `hasAuthParamsInUrl()` is true and a second `signIn()` call swaps the code for tokens; after that `isSignedIn()` decides which view to show. Logout is `signOut()`.
+
+`@asgardeo/browser` is still pre-1.0, so the version is pinned exactly in `package.json`.
